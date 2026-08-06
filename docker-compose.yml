@@ -11,7 +11,7 @@ services:
     environment:
       - POSTGRES_USER=student
       - POSTGRES_PASSWORD=student666
-      - POSTGRES_DB=collect
+      - POSTGRES_DB=skill
       - TZ=Asia/Taipei
       - PGTZ=Asia/Taipei
     volumes:
@@ -19,7 +19,7 @@ services:
     ports:
       - "${DB_PORT:-5432}:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U student -d collect"]
+      test: ["CMD-SHELL", "pg_isready -U student -d skill"]
       interval: 5s
       timeout: 3s
       retries: 10
