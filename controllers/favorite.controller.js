@@ -1,4 +1,4 @@
-const { pool } = require('../scripts/db');
+const { pool } = require('../db/pg');
 
 // 取得目前登入使用者的收藏，並一併回傳行星內容供前端顯示。
 const getFavorites = async (req, res) => {

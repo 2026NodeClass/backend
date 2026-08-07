@@ -5,6 +5,8 @@ const express = require('express');
 const adminRouter = require('./routers/admin.router')
 const authRouter = require('./routers/auth.router');
 const favoriteRouter = require('./routers/favorite.router');
+const { pool } = require('./db/pg');
+const { AppDataSource } = require('./db/typeorm/data-source');
 const app = express();              // app = 一個請求處理器
 
 
@@ -56,6 +58,42 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(3010, () => {            // 等同 http.createServer(app).listen(3010)
-  console.log('Server 啟動在 http://localhost:3010');
+let server;
+
+async function startServer() {
+  await AppDataSource.initialize();
+  server = app.listen(3010, () => { // 等同 http.createServer(app).listen(3010)
+    console.log('Server 啟動在 http://localhost:3010');
+  });
+}
+
+async function closeDatabases() {
+  const closingTasks = [pool.end()];
+  if (AppDataSource.isInitialized) {
+    closingTasks.push(AppDataSource.destroy());
+  }
+  await Promise.allSettled(closingTasks);
+}
+
+async function shutdown(signal) {
+  console.log(`收到 ${signal}，正在關閉伺服器`);
+
+  if (!server) {
+    await closeDatabases();
+    process.exit(0);
+  }
+
+  server.close(async (error) => {
+    await closeDatabases();
+    process.exit(error ? 1 : 0);
+  });
+}
+
+process.once('SIGINT', () => shutdown('SIGINT'));
+process.once('SIGTERM', () => shutdown('SIGTERM'));
+
+startServer().catch(async (error) => {
+  console.error('伺服器啟動失敗：', error);
+  await closeDatabases();
+  process.exit(1);
 });

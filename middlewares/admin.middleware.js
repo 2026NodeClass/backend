@@ -1,4 +1,4 @@
-const { pool } = require("../scripts/db");
+const { pool } = require("../db/pg");
 
 // 驗證新增星系的必填欄位
 const validateCreateGalaxy = (req, res, next) => {

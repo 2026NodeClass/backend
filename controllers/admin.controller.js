@@ -1,4 +1,4 @@
-const { pool } = require("../scripts/db");
+const { pool } = require("../db/pg");
 
 
 //取得星系

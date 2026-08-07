@@ -4,9 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "docker compose up -d && node app.js",
+    "start": "docker compose up -d --wait && node app.js",
     "stop": "docker compose stop",
-    "sql": "node scripts/seed_data.js",
+    "sql": "node db/seed_data.js",
+    "migration:create": "typeorm migration:create -o",
+    "migration:generate": "typeorm migration:generate -d db/typeorm/data-source.js -o",
+    "migration:show": "typeorm migration:show -d db/typeorm/data-source.js",
+    "migration:run": "typeorm migration:run -d db/typeorm/data-source.js",
+    "migration:revert": "typeorm migration:revert -d db/typeorm/data-source.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
