@@ -2,15 +2,19 @@
 require('dotenv').config({ quiet: true });
 
 const express = require('express');
+const cors = require('cors');
 const adminRouter = require('./routers/admin.router')
 const authRouter = require('./routers/auth.router');
 const favoriteRouter = require('./routers/favorite.router');
 const { pool } = require('./db/pg');
 const { AppDataSource } = require('./db/typeorm/data-source');
+const { galaxyRouter, planetRouter } = require('./routers/catalog.router');
+const healthRouter = require('./routers/health.router');
 const app = express();              // app = 一個請求處理器
 
 
 app.use(express.json());
+app.use(cors());
 
 // 全域 middleware
 app.use((req, res, next) => {
@@ -32,6 +36,10 @@ app.use('/api/favorites', favoriteRouter); // 登入使用者的收藏路由
 
 // 客製 404：永遠放在所有路由「最後」（app.listen 之前）
 // ⚠️ 之後每節新增的路由，都要加在這行【上面】
+app.use('/api/health', healthRouter);
+app.use('/api/galaxies', galaxyRouter);
+app.use('/api/planets', planetRouter);
+
 app.use((req, res) => res.status(404).json({ error: 'Not Found' }));
 
 // 統一處理資料庫限制與非預期錯誤，避免把 SQL 細節暴露給前端。
