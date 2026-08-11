@@ -22,6 +22,9 @@ app.use((req, res, next) => {
 
 //------------------------- 路由列表 --------------------------------------
 
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: '伺服器運作中' });
+});
 
 app.use('/api/auth', authRouter); // 登入路由
 app.use('/api/admin',adminRouter); // 後台路由

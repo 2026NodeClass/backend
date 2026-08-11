@@ -20,6 +20,8 @@ npm start
 
 伺服器啟動後，可透過 `http://localhost:3010` 存取 API。
 
+前端串接方式、請求範例、回應格式與錯誤碼請參考 [前端 API 串接文件](docs/frontend-api.md)。
+
 ## 常用指令
 
 ```bash
