@@ -11,8 +11,13 @@ const { AppDataSource } = require('./db/typeorm/data-source');
 const { galaxyRouter, planetRouter } = require('./routers/catalog.router');
 const healthRouter = require('./routers/health.router');
 const app = express();              // app = 一個請求處理器
+const cors = require('cors')
 
+const corsOptions = {
+  origin: 'http://localhost:5173',
+};
 
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cors());
 
@@ -26,6 +31,9 @@ app.use((req, res, next) => {
 
 //------------------------- 路由列表 --------------------------------------
 
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: '伺服器運作中' });
+});
 
 app.use('/api/auth', authRouter); // 登入路由
 app.use('/api/admin',adminRouter); // 後台路由
