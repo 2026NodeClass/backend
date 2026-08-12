@@ -8,8 +8,13 @@ const favoriteRouter = require('./routers/favorite.router');
 const { pool } = require('./db/pg');
 const { AppDataSource } = require('./db/typeorm/data-source');
 const app = express();              // app = 一個請求處理器
+const cors = require('cors')
 
+const corsOptions = {
+  origin: 'http://localhost:5173',
+};
 
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // 全域 middleware
