@@ -2,7 +2,6 @@
 require('dotenv').config({ quiet: true });
 
 const express = require('express');
-const cors = require('cors');
 const adminRouter = require('./routers/admin.router')
 const authRouter = require('./routers/auth.router');
 const favoriteRouter = require('./routers/favorite.router');
@@ -19,7 +18,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cors());
 
 // 全域 middleware
 app.use((req, res, next) => {
