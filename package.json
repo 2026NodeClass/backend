@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "docker compose up -d --wait && node app.js",
+    "start": "node app.js",
+    "dev":"docker compose up -d --wait && node app.js",
     "stop": "docker compose stop",
     "sql": "node db/seed_data.js",
     "migration:create": "typeorm migration:create -o",
