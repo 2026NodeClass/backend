@@ -12,8 +12,13 @@ const healthRouter = require('./routers/health.router');
 const app = express();              // app = 一個請求處理器
 const cors = require('cors')
 
+const allowURL = [
+  'http://localhost:5173',
+  'https://2026nodeclass.github.io/',
+]
+
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: allowURL,
 };
 
 app.use(cors(corsOptions));
@@ -76,8 +81,11 @@ let server;
 
 async function startServer() {
   await AppDataSource.initialize();
-  server = app.listen(3010, () => { // 等同 http.createServer(app).listen(3010)
-    console.log('Server 啟動在 http://localhost:3010');
+
+  const PORT = process.env.PORT || 3010;
+
+  server = app.listen(PORT, () => { // 等同 http.createServer(app).listen(3010)
+    console.log(`Server 啟動在 port ${PORT}`);
   });
 }
 
