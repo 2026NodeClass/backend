@@ -14,7 +14,7 @@ const cors = require('cors')
 
 const allowURL = [
   'http://localhost:5173',
-  'https://2026nodeclass.github.io/',
+  'https://2026nodeclass.github.io',
 ]
 
 const corsOptions = {
