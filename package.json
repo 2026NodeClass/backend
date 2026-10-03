@@ -13,7 +13,7 @@
     "migration:show": "typeorm migration:show -d db/typeorm/data-source.js",
     "migration:run": "typeorm migration:run -d db/typeorm/data-source.js",
     "migration:revert": "typeorm migration:revert -d db/typeorm/data-source.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test"
   },
   "keywords": [],
   "author": "",
